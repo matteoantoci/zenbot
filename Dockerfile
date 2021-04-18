@@ -1,20 +1,15 @@
-FROM node:10
+FROM node:lts-alpine
+RUN apk update && apk upgrade && apk add --no-cache bash git openssh python build-base
 
 ADD . /app
-WORKDIR /app
-RUN npm install -g node-gyp
-RUN npm ci --unsafe
-
-FROM node:10-alpine
-
 COPY zenbot.sh /usr/local/bin/zenbot
 
 WORKDIR /app
-RUN chown -R node:node /app
 
-COPY --chown=node . /app
-COPY --chown=node --from=builder /usr/local/lib/node_modules/ /usr/local/lib/node_modules/
-COPY --chown=node --from=builder /app/node_modules /app/node_modules/
+RUN npm install -g node-gyp
+RUN npm ci --unsafe
+
+RUN chown -R node:node /app
 
 USER node
 ENV NODE_ENV production
