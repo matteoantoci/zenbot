@@ -1,11 +1,12 @@
-FROM node:lts
+FROM node:12
 
-ADD . /app
+ADD package.json /app
+ADD package-lock.json /app
 WORKDIR /app
 RUN npm install -g node-gyp
-RUN npm install --unsafe
+RUN npm ci --unsafe
 
-FROM node:lts-alpine
+FROM node:12-alpine
 
 COPY zenbot.sh /usr/local/bin/zenbot
 
