@@ -1,11 +1,11 @@
-FROM node:12
+FROM node:10
 
 ADD . /app
 WORKDIR /app
 RUN npm install -g node-gyp
 RUN npm ci --unsafe
 
-FROM node:12-alpine
+FROM node:10-alpine
 
 COPY zenbot.sh /usr/local/bin/zenbot
 
