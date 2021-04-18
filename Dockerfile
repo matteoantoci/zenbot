@@ -1,7 +1,6 @@
 FROM node:12
 
-ADD package.json /app
-ADD package-lock.json /app
+ADD . /app
 WORKDIR /app
 RUN npm install -g node-gyp
 RUN npm ci --unsafe
